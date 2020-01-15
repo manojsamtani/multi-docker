@@ -4,17 +4,17 @@ services:
 #    build:
 #    context: .
 #    name: client-node
-#    dockerfile: client/Dockerfile.dev
+#    dockerfile: client/${DFILE}
 #  server:
 #    build:
 #    context: .
 #    name: server-node
-#    dockerfile: server/Dockerfile.dev
+#    dockerfile: server/${DFILE}
 #  worker:
 #    build:
 #    context: .
 #    name: worker-node
-#    dockerfile: worker/Dockerfile.dev
+#    dockerfile: worker/${DFILE}
   postgres:
     image: 'postgres:latest'
     restart: always
@@ -29,7 +29,7 @@ services:
     depends_on:
       - postgres
     build:
-      dockerfile: Dockerfile.dev
+      dockerfile: ${DFILE}
       context: ./server
     volumes:
       - /app/node_modules
@@ -44,14 +44,14 @@ services:
       - PGPORT=5432
   client:
     build:
-      dockerfile: Dockerfile.dev
+      dockerfile: ${DFILE}
       context: ./client
     volumes:
       - /app/node_modules
       - ./client:/app
   worker:
     build:
-      dockerfile: Dockerfile.dev
+      dockerfile: ${DFILE}
       context: ./worker
     volumes:
       - /app/node_modules
@@ -62,7 +62,7 @@ services:
   nginx-proxy:
     restart: always
     build:
-      dockerfile: Dockerfile.dev
+      dockerfile: ${DFILE}
       context: ./nginx
     ports:
       - '80:80'

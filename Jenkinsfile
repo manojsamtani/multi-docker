@@ -9,11 +9,16 @@ pipeline {
   stages {
 
     stage('Build and start test image') {
+
+      if ( "${BRANCH_NAME}" == 'master' ) {
+        dockerfile = 'Dockerfile'
+      } else {
+        dockerfile = 'Dockerfile.dev'
+      }
       steps{
         echo "Starting to build docker images $registry:$GIT_COMMIT"
         script {
-          sh "/usr/local/bin/docker-compose build"
-          sh "/usr/local/bin/docker-compose -p $GIT_COMMIT up -d"
+          sh "export DFILE=${dockerfile}; /usr/local/bin/docker-compose -p $GIT_COMMIT up -d --build"
         }
       }
     }
@@ -21,7 +26,7 @@ pipeline {
     stage('Test run image') {
       steps{
         script {
-          sh "/usr/local/bin/docker-compose -p $GIT_COMMIT ps"
+          sh "export DFILE=${dockerfile}; /usr/local/bin/docker-compose -p $GIT_COMMIT ps"
         }
       }
     }
