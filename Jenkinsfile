@@ -23,9 +23,12 @@ pipeline {
         script {
           sh "/usr/local/bin/docker-compose -p $GIT_COMMIT ps"
         }
-        timeout(time: 10, unit: 'MINUTES') {
-          input 'Does Pre-Production look good?'
-        }
+      }
+    }
+
+    stage('Approval for deployment') {
+      timeout(time: 1, unit: 'MINUTES') {
+        input message: 'Does Pre-Production look good?', ok: 'yes'
       }
     }
 
