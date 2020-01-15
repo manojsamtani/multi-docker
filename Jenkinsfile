@@ -22,7 +22,9 @@ pipeline {
       steps{
         script {
           sh "/usr/local/bin/docker-compose ps"
-          input("Verify in your browser, if worked fine then proceed ?")
+          timeout(time: 2, unit: "MINUTES") {
+            input message: "Verify in your browser, if worked fine then proceed or abort ?"
+          }
         }
       }
     }
@@ -52,8 +54,16 @@ pipeline {
   }
 
   post {
+    always {
+      sh "/usr/local/bin/docker-compose down || true"
+    }
+
+    failure {
+      bitbucketStatusNotify buildState: "FAILED"
+    }
+
     success {
-      echo "Build completed successfully :-)"
+      bitbucketStatusNotify buildState: "SUCCESSFULL"
     }
   }
 }
