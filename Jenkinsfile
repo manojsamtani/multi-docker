@@ -24,7 +24,7 @@ pipeline {
           sh "/usr/local/bin/docker-compose -p $GIT_COMMIT ps"
         }
         timeout(time: 10, unit: 'MINUTES') {
-          input message: "Does Pre-Production look good?"
+          input 'Does Pre-Production look good?'
         }
       }
     }
