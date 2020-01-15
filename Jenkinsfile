@@ -23,8 +23,12 @@ pipeline {
         script {
           sh "/usr/local/bin/docker-compose -p $GIT_COMMIT ps"
         }
-        timeout(time: 3, unit: "MINUTES") {
-          input message: "Verify in your browser, if worked fine then proceed or abort ?", ok: 'Yes'
+        input{
+  	  message "Press Ok to continue"
+	  submitter "user1,user2"
+	  parameters {
+	    string(name:'username', defaultValue: 'user', description: 'Username of the user pressing Ok')
+	  }
         }
       }
     }
