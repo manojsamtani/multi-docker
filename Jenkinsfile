@@ -40,7 +40,7 @@ pipeline {
         }
         script {
           if ( "${BRANCH_NAME}" == 'develop' ) {
-            sh "git commit -am "Merged develop branch to master" && git push origin master"
+            sh "git commit -am 'Merged develop branch to master' && git push origin master"
           }
         }
       }
