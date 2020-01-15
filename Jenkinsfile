@@ -33,16 +33,21 @@ pipeline {
       }
     }
 
-    stage('Approval for deployment') {
+    stage('Build Images') {
       steps {
         timeout(time: 5, unit: 'MINUTES') {
-          input message: 'Does Pre-Production look good?', ok: 'yes'
+          input message: 'Does Pre-Production look good? Ready to Build images?', ok: 'yes'
         }
         script {
-          if ( "${BRANCH_NAME}" == 'develop' ) {
-            sh "git push origin master"
-          }
+          sh "docker build -t manojsamtani/multi-worker ./worker"
+          sh "docker build -t manojsamtani/multi-nginx ./nginx"
+          sh "docker build -t manojsamtani/multi-server ./server"
         }
+//        script {
+//         if ( "${BRANCH_NAME}" == 'develop' ) {
+//            sh "git push origin master"
+//          }
+//        }
       }
     }
 
