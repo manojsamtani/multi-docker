@@ -12,8 +12,8 @@ pipeline {
       steps{
         echo "Starting to build docker images $registry:$GIT_COMMIT"
         script {
-          sh "docker-compose build"
-          sh "docker-compose up -d"
+          sh "/usr/local/bin/docker-compose build"
+          sh "/usr/local/bin/docker-compose up -d"
         }
       }
     }
@@ -21,7 +21,7 @@ pipeline {
     stage('Test run image') {
       steps{
         script {
-          sh "docker-compose ps"
+          sh "/usr/local/bin/docker-compose ps"
           input("Verify in your browser, if worked fine then proceed ?")
         }
       }
