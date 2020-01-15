@@ -38,6 +38,11 @@ pipeline {
         timeout(time: 5, unit: 'MINUTES') {
           input message: 'Does Pre-Production look good?', ok: 'yes'
         }
+        script {
+          if ( "${BRANCH_NAME}" == 'develop' ) {
+            sh "git push origin master"
+          }
+        }
       }
     }
 
