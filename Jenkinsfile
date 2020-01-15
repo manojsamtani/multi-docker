@@ -22,9 +22,9 @@ pipeline {
       steps{
         script {
           sh "/usr/local/bin/docker-compose ps"
-          timeout(time: 2, unit: "MINUTES") {
+//          timeout(time: 3, unit: "MINUTES") {
             input message: "Verify in your browser, if worked fine then proceed or abort ?"
-          }
+  //        }
         }
       }
     }
