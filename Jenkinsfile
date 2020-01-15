@@ -42,12 +42,22 @@ pipeline {
           sh "docker build -t manojsamtani/multi-worker ./worker"
           sh "docker build -t manojsamtani/multi-nginx ./nginx"
           sh "docker build -t manojsamtani/multi-server ./server"
+          sh "docker build -t manojsamtani/multi-client ./client"
         }
 //        script {
 //         if ( "${BRANCH_NAME}" == 'develop' ) {
 //            sh "git push origin master"
 //          }
 //        }
+      }
+    }
+
+    stage('Push Images to Docker HUB') {
+      steps {
+        sh "docker push manojsamtani/multi-worker"
+        sh "docker push manojsamtani/multi-nginx"
+        sh "docker push manojsamtani/multi-server"
+        sh "docker push manojsamtani/multi-client"
       }
     }
 
