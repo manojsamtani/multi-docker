@@ -11,14 +11,15 @@ pipeline {
     stage('Build and start test image') {
 
       steps{
-        if ( "${BRANCH_NAME}" == 'master' ) {
-          dockerfile = 'Dockerfile'
-        } else {
-          dockerfile = 'Dockerfile.dev'
-        }
 
         echo "Starting to build docker images $registry:$GIT_COMMIT"
+
         script {
+          if ( "${BRANCH_NAME}" == 'master' ) {
+            dockerfile = 'Dockerfile'
+          } else {
+            dockerfile = 'Dockerfile.dev'
+          }
           sh "export DFILE=${dockerfile}; /usr/local/bin/docker-compose -p $GIT_COMMIT up -d --build"
         }
       }
