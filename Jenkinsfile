@@ -13,7 +13,7 @@ pipeline {
         echo "Starting to build docker images $registry:$GIT_COMMIT"
         script {
           sh "/usr/local/bin/docker-compose build"
-          sh "/usr/local/bin/docker-compose up -d"
+          sh "/usr/local/bin/docker-compose up -d -p $GIT_COMMIT"
         }
       }
     }
@@ -21,7 +21,7 @@ pipeline {
     stage('Test run image') {
       steps{
         script {
-          sh "/usr/local/bin/docker-compose ps"
+          sh "/usr/local/bin/docker-compose ps -p $GIT_COMMIT"
       //    timeout(time: 3, unit: "MINUTES") {
       //      input message: "Verify in your browser, if worked fine then proceed or abort ?", ok: 'Yes'
       //    }
