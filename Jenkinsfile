@@ -27,8 +27,10 @@ pipeline {
     }
 
     stage('Approval for deployment') {
-      timeout(time: 1, unit: 'MINUTES') {
-        input message: 'Does Pre-Production look good?', ok: 'yes'
+      steps {
+        timeout(time: 1, unit: 'MINUTES') {
+          input message: 'Does Pre-Production look good?', ok: 'yes'
+        }
       }
     }
 
