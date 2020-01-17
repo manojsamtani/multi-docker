@@ -1,20 +1,5 @@
 version: '3'
 services:
-#  client:
-#    build:
-#    context: .
-#    name: client-node
-#    dockerfile: client/${DFILE}
-#  server:
-#    build:
-#    context: .
-#    name: server-node
-#    dockerfile: server/${DFILE}
-#  worker:
-#    build:
-#    context: .
-#    name: worker-node
-#    dockerfile: worker/${DFILE}
   postgres:
     image: 'postgres:latest'
     restart: always
